@@ -57,6 +57,17 @@ $lots = [
     ]
 ];
 
+function formats_the_price ($price) {
+// форматирует сумму лота и добавляет к ней знак рубля
+    $price = ceil($price);
+
+    if ($price >= 1000) {
+        $price = number_format($price, 0, "", " ");
+    }
+
+    return $price .= "<b class='rub'>р</b>";
+};
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -134,7 +145,7 @@ $lots = [
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>
-                            <span class="lot__cost"><?=$lot["price"]; ?><b class="rub">р</b></span>
+                            <span class="lot__cost"><?=formats_the_price($lot["price"]); ?></span>
                         </div>
                         <div class="lot__timer timer">
                             12:23
