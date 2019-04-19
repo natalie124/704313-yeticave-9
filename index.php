@@ -5,7 +5,7 @@ $user_name = 'natalie'; // укажите здесь ваше имя
 
 $categories = [
     "boards" => "Доски и лыжи",
-    "attachmen" => "Крепления",
+    "attachment" => "Крепления",
     "boots" => "Ботинки",
     "clothing" => "Одежда",
     "tools" => "Инструменты",
@@ -29,7 +29,7 @@ $lots = [
     ],
     [
         "name" => "Крепления Union Contact Pro 2015 года размер L/XL",
-        "category" => $categories["attachmen"],
+        "category" => $categories["attachment"],
         "price" => 8000,
         "path" => "img/lot-3.jpg"
 
@@ -57,13 +57,10 @@ $lots = [
     ]
 ];
 
-function formats_the_price ($price) {
+function format_price ($price) {
 // форматирует сумму лота и добавляет к ней знак рубля
     $price = ceil($price);
-
-    if ($price >= 1000) {
-        $price = number_format($price, 0, "", " ");
-    }
+    $price = number_format($price, 0, "", " ");
 
     return $price .= "<b class='rub'>р</b>";
 };
@@ -121,9 +118,9 @@ function formats_the_price ($price) {
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
         <ul class="promo__list">
             <!--заполните этот список из массива категорий-->
-            <?php foreach ($categories as $category => $alias): ?>
-            <li class="promo__item promo__item--boards">
-                <a class="promo__link" href="pages/all-lots.html"><?= $alias ?></a>
+            <?php foreach ($categories as $alias => $category): ?>
+            <li class="promo__item promo__item--<?= $alias ?>">
+                <a class="promo__link" href="pages/all-lots.html"><?= $category ?></a>
             </li>
             <?php endforeach; ?>
         </ul>
@@ -145,7 +142,7 @@ function formats_the_price ($price) {
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>
-                            <span class="lot__cost"><?=formats_the_price($lot["price"]); ?></span>
+                            <span class="lot__cost"><?=format_price($lot["price"]); ?></span>
                         </div>
                         <div class="lot__timer timer">
                             12:23
@@ -163,9 +160,9 @@ function formats_the_price ($price) {
     <nav class="nav">
         <ul class="nav__list container">
             <!--заполните этот список из массива категорий-->
-            <?php foreach ($categories as $category => $alias): ?>
+            <?php foreach ($categories as $category): ?>
             <li class="nav__item">
-                <a href="pages/all-lots.html"><?= $alias; ?></a>
+                <a href="pages/all-lots.html"><?= $category; ?></a>
             </li>
             <?php endforeach; ?>
         </ul>
