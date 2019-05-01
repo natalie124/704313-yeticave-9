@@ -1,9 +1,9 @@
 <?php
 /**
- * форматирует сумму лота и добавляет к ней знак рубля
+ * форматирует цену и добавляет к ней знак рубля
  *
- * @param $price int Сумма лота
- * @return $price str Сумма лота со знаком рубля
+ * @param $price float Изначальная цена
+ * @return $price str Отформатированная строка
  */
 function format_price ($price) {
     $price = ceil($price);
