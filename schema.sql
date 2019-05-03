@@ -21,7 +21,7 @@ CREATE TABLE lots (
   price INT NOT NULL,
   dt_end TIMESTAMP,
   bet_step INT,
-  u_id INT,
+  user_id INT,
   win_id INT,
   cat_id INT
 );
@@ -33,7 +33,7 @@ CREATE TABLE bets (
   id INT AUTO_INCREMENT PRIMARY KEY,
   dt_add TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   bet_price INT NOT NULL,
-  u_id INT,
+  user_id INT,
   lot_id INT
 );
 
@@ -44,9 +44,7 @@ CREATE TABLE users (
   name CHAR(128) NOT NULL,
   password CHAR(64) NOT NULL,
   avatar_path CHAR(64),
-  contact CHAR(128) NOT NULL,
-  lot_id INT,
-  bet_id INT
+  contact CHAR(128) NOT NULL
 );
 
 CREATE INDEX  i_u_name ON users(name);

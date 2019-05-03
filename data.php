@@ -22,7 +22,7 @@ $lots = [
         "name" => "DC Ply Mens 2016/2017 Snowboard",
         "category" => $categories["boards"],
         "price" => 159999,
-        "path" => "img/lot-3.jpg"
+        "path" => "img/lot-2.jpg"
     ],[
         "name" => "Крепления Union Contact Pro 2015 года размер L/XL",
         "category" => $categories["attachment"],
@@ -30,12 +30,12 @@ $lots = [
         "path" => "img/lot-3.jpg"
     ],[
         "name" => "Ботинки для сноуборда DC Mutiny Charocal",
-        "category" => $categories["boards"],
+        "category" => $categories["boots"],
         "price" => 10999,
         "path" => "img/lot-4.jpg"
     ],[
         "name" => "Куртка для сноуборда DC Mutiny Charocal",
-        "category" => $categories["boots"],
+        "category" => $categories["clothing"],
         "price" =>7500,
         "path" => "img/lot-5.jpg"
     ],[
