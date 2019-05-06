@@ -49,7 +49,7 @@ LEFT JOIN categories AS c ON l.cat_id = c.id
 WHERE NOW() < l.dt_end AND l.win_id IS NULL
 GROUP BY l.id
 ORDER BY l.dt_add DESC
-LIMIT 6;
+LIMIT 9;
 
 -- показываем лот по его id. Получаем также название категории, к которой принадлежит лот
 
