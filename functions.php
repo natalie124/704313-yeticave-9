@@ -35,3 +35,17 @@ function get_rows_from_mysql ($con, $sql) {
 
     return ($result) ? mysqli_fetch_all($result, MYSQLI_ASSOC) : die("Ошибка " . mysqli_error($con));
 };
+
+/**
+ * Получает строкy из MySQL
+ *
+ * @param $con str ресурс соединения
+ * @param $sql str строка запроса
+ * @return array массив с данными - если запрос выполнен, иначе ошибка
+ */
+
+function get_row_from_mysql ($con, $sql) {
+    $result = mysqli_query($con, $sql);
+
+    return ($result) ? mysqli_fetch_assoc($result) : die("Ошибка " . mysqli_error($con));
+};
