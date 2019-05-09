@@ -14,13 +14,13 @@
         <div class="lot-item__timer timer <?=(count_time("tomorrow") < 3600) ? "timer--finishing" : ""; ?>">
           <?=gmdate("H:i", count_time("tomorrow")); ?>
         </div>
-        <div class="lot-item__cost-state">ы
+        <div class="lot-item__cost-state">
           <div class="lot-item__rate">
             <span class="lot-item__amount">Текущая цена</span>
-            <span class="lot-item__cost"><?=$lot['price']; ?></span>
+            <span class="lot-item__cost"><?=format_price($lot['price']); ?></span>
           </div>
           <div class="lot-item__min-cost">
-            Мин. ставка <span><?=$lot['price'] + $lot['bet_step']; ?></span>
+            Мин. ставка <span><?=number_format(($lot['price'] + $lot['bet_step']), 0, "", " ") . " р"; ?></span>
           </div>
         </div>
         <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post" autocomplete="off">
