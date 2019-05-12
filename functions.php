@@ -49,3 +49,19 @@ function get_row_from_mysql ($con, $sql) {
 
     return ($result) ? mysqli_fetch_assoc($result) : die("Ошибка " . mysqli_error($con));
 };
+
+/**
+ * Очищает строку от тегов
+ *
+ * @param $value str строка
+ * @return $value str очищенная строка
+ */
+
+function clean ($value = "") {
+    $value = trim($value); // удаляет пробелы в начале и в конце строки
+    $value = stripslashes($value); // удаляет экранирующие символы
+    $value = strip_tags($value); // удаляет HTML и PHP теги
+    $value = htmlspecialchars($value); //преобразует специальные символы в HTML-сущности
+
+    return $value;
+};

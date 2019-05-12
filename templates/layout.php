@@ -5,6 +5,7 @@
     <title><?= $title; ?></title>
     <link href="../css/normalize.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
+    <link href="<?=$flatpickr_css ?>" rel="stylesheet">
 </head>
 <body>
 <div class="page-wrapper">
@@ -46,14 +47,14 @@
 
 <main class=<?=$container ?>>
 
-    <?=$page_content; ?>
+    <?= $page_content; ?>
 
 </main>
 </div>
 
 <footer class="main-footer">
 
-    <?=$nav_content; ?>
+    <?= $nav_content; ?>
 
     <div class="main-footer__bottom container">
         <div class="main-footer__copyright">
