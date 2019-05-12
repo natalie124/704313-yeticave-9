@@ -9,9 +9,9 @@ $sql_cat = "SELECT id, name, symbol_code FROM categories"; // получаем �
 
 $sql_lots = "SELECT l.id, l.title AS name, l.price AS start_price, l.img_path, l.dt_end, c.name AS category FROM lots AS l
             LEFT JOIN categories AS c ON l.cat_id = c.id
-            -- WHERE NOW() < l.dt_end AND l.win_id IS NULL
+            WHERE NOW() < l.dt_end AND l.win_id IS NULL
             ORDER BY l.dt_add DESC
-            LIMIT 99"; // получаем самые новые открытые лоты (каждый лот включает название, стартовую цену, ссылку на изображение, название категории)
+            LIMIT 9"; // получаем самые новые открытые лоты (каждый лот включает название, стартовую цену, ссылку на изображение, название категории)
 
 $categories = get_rows_from_mysql($con, $sql_cat);
 $lots = get_rows_from_mysql($con, $sql_lots);
