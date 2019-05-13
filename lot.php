@@ -23,13 +23,13 @@ $nav_content = include_template('nav.php', [
 if (empty($lot)) {
 // если лот пустой, включаем шаблон ошибки
     $content = include_template('404.php', [
-    'nav_content' => $nav_content
+        'nav_content' => $nav_content
     ]);
 } else {
 // включаем шаблон лота
     $content = include_template('lot.php', [
-    'lot' => $lot,
-    'nav_content' => $nav_content
+        'lot' => $lot,
+        'nav_content' => $nav_content
     ]);
 };
 
@@ -39,7 +39,8 @@ $layout_content = include_template('layout.php', [
     'title' => 'YetiCave - просмотр лота ' . $lot['title'],
     'is_auth' => $is_auth,
     'user_name' => $user_name,
-    'container' => ''
+    'container' => '',
+    'flatpickr_css' => '#'
 ]);
 
 print($layout_content);

@@ -1,18 +1,18 @@
-<?=$nav_content; ?>
+<?= $nav_content; ?>
 <section class="lot-item container">
     <h2><?=htmlspecialchars($lot['title']); ?></h2>
     <div class="lot-item__content">
     <div class="lot-item__left">
       <div class="lot-item__image">
-        <img src="<?=$lot['img_path']; ?>" width="730" height="548" alt="Сноуборд">
+        <img src="<?=$lot['img_path']; ?>" width="730" height="548" alt="<?=$lot['title']; ?>">
       </div>
       <p class="lot-item__category">Категория: <span><?=htmlspecialchars($lot['name']); ?></span></p>
       <p class="lot-item__description"><?=htmlspecialchars($lot['description']); ?></p>
     </div>
     <div class="lot-item__right">
       <div class="lot-item__state">
-        <div class="lot-item__timer timer <?=(count_time("tomorrow") < 3600) ? "timer--finishing" : ""; ?>">
-          <?=gmdate("H:i", count_time("tomorrow")); ?>
+        <div class="lot-item__timer timer <?=((count_time($lot['dt_end'])) < 3600) ? "timer--finishing" : ""; ?>">
+          <?=gmdate("d:H:i", count_time($lot['dt_end'])); ?>
         </div>
         <div class="lot-item__cost-state">
           <div class="lot-item__rate">

@@ -7,7 +7,7 @@ require_once('init.php');
 
 $sql_cat = "SELECT id, name, symbol_code FROM categories"; // получаем все категрии
 
-$sql_lots = "SELECT l.id, l.title AS name, l.price AS start_price, l.img_path, c.name AS category FROM lots AS l
+$sql_lots = "SELECT l.id, l.title AS name, l.price AS start_price, l.img_path, l.dt_end, c.name AS category FROM lots AS l
             LEFT JOIN categories AS c ON l.cat_id = c.id
             WHERE NOW() < l.dt_end AND l.win_id IS NULL
             ORDER BY l.dt_add DESC
@@ -32,7 +32,8 @@ $layout_content = include_template('layout.php', [
     'title' => 'YetiCave - Главная',
     'is_auth' => $is_auth,
     'user_name' => $user_name,
-    'container' => 'container'
+    'container' => 'container',
+    'flatpickr_css' => '#'
 ]);
 
 print($layout_content);
