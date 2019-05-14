@@ -22,12 +22,12 @@ $content = include_template('add.php', [
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') { //проверяем, что форма была отправлена
 
-    $title = clean($_POST['lot-name']);
-    $description = clean($_POST['message']);
+    $title = $_POST['lot-name'];
+    $description = $_POST['message'];
     $price = $_POST['lot-rate'];
     $dt_end = $_POST['lot-date'];
     $bet_step = $_POST['lot-step'];
-    $cat_id = clean($_POST['category']);
+    $cat_id = $_POST['category'];
 
     $required = ['lot-name', 'message', 'lot-rate', 'lot-date', 'lot-step','category']; // определяем список полей для валидации
 
