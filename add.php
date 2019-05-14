@@ -5,6 +5,11 @@ require_once('data.php');
 require_once('functions.php');
 require_once('init.php');
 
+if (!isset($_SESSION['user'])) {
+    http_response_code(403);
+    die('ErrorDocument 403 "Forbidden"');
+}
+
 $sql_cat = "SELECT id, name, symbol_code FROM categories"; // получаем все категрии
 
 $categories = get_rows_from_mysql($con, $sql_cat); // преобразуем строки категорий в массив
@@ -88,9 +93,6 @@ $layout_content = include_template('layout.php', [
     'page_content' => $content,
     'nav_content' => $nav_content,
     'title' => 'YetiCave - добавить лот',
-    'is_auth' => $is_auth,
-    'user_name' => $user_name,
-    'container' => '',
     'flatpickr_css' => '../css/flatpickr.min.css'
 ]);
 

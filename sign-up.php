@@ -5,6 +5,11 @@ require_once('data.php');
 require_once('functions.php');
 require_once('init.php');
 
+if (isset($_SESSION['user'])) {
+// если сессия была открыта, отправляем пользователя на главную страницу
+    header("Location: index.php");
+}
+
 $sql_cat = "SELECT id, name, symbol_code FROM categories"; // получаем все категрии
 
 $categories = get_rows_from_mysql($con, $sql_cat); // преобразуем строки категорий в массив
@@ -59,7 +64,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (count($errors)) { // если в массиве есть ошибки, показываем их в шаблоне с формой
         $content = include_template('sign-up.php', [
             'nav_content' => $nav_content,
-            'categories' => $categories,
             'form_invalid' => 'form--invalid',
             'field_invalid' => $errors_class,
             'errors' => $errors
@@ -74,7 +78,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $res = mysqli_stmt_execute($stmt); // выполняем полученное выражение
 
         if($res) { // если запрос выполнен успешно, то перенаправляем пользователя на страницу входа
-            $lot_id = mysqli_insert_id($con);
             header("Location: login.php");
         }
     }
@@ -83,11 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $layout_content = include_template('layout.php', [
     'page_content' => $content,
     'nav_content' => $nav_content,
-    'title' => 'YetiCave - регистрация аккаунта',
-    'is_auth' => false,
-    'user_name' => $user_name,
-    'container' => '',
-    'flatpickr_css' => ''
+    'title' => 'YetiCave - регистрация аккаунта'
 ]);
 
 print($layout_content);

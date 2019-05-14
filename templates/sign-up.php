@@ -3,7 +3,7 @@
   <h2>Регистрация нового аккаунта</h2>
   <div class="form__item <?=$errors['email'] ? $field_invalid : '' ?>"> <!-- form__item--invalid -->
     <label for="email">E-mail <sup>*</sup></label>
-    <input id="email" type="text" name="email" placeholder="Введите e-mail">
+    <input id="email" type="text" name="email" placeholder="Введите e-mail" value="<?=(!empty($_POST['email']) && empty($errors['email'])) ? $_POST['email'] : '' ?>">
     <span class="form__error"><?=$errors['email']; ?></span>
   </div>
   <div class="form__item <?=empty($_POST['password']) ? $field_invalid : '' ?>">
@@ -13,12 +13,12 @@
   </div>
   <div class="form__item <?=empty($_POST['name']) ? $field_invalid : '' ?>">
     <label for="name">Имя <sup>*</sup></label>
-    <input id="name" type="text" name="name" placeholder="Введите имя">
+    <input id="name" type="text" name="name" placeholder="Введите имя" value="<?=$_POST['name'] ?? ""; ?>">
     <span class="form__error">Введите имя</span>
   </div>
   <div class="form__item <?=empty($_POST['message']) ? $field_invalid : '' ?>">
     <label for="message">Контактные данные <sup>*</sup></label>
-    <textarea id="message" name="message" placeholder="Напишите как с вами связаться"></textarea>
+    <textarea id="message" name="message" placeholder="Напишите как с вами связаться"><?=$_POST['message'] ?? ""; ?></textarea>
     <span class="form__error">Напишите как с вами связаться</span>
   </div>
   <span class="form__error form__error--bottom">Пожалуйста, исправьте ошибки в форме.</span>
