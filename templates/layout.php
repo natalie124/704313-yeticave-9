@@ -5,7 +5,7 @@
     <title><?= $title; ?></title>
     <link href="../css/normalize.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
-    <link href="<?=isset($flatpickr_css) ? $flatpickr_css : '' ?>" rel="stylesheet">
+    <link href="<?=$flatpickr_css ?? '' ?>" rel="stylesheet">
 </head>
 <body>
 <div class="page-wrapper">
@@ -24,9 +24,9 @@
 
         <nav class="user-menu">
 
-        <?php if (isset($_SESSION['user'])): ?>
+        <?php if ($is_auth): ?>
             <div class="user-menu__logged">
-                <p><?=($_SESSION['user']['name']); ?></p>
+                <p><?=$user_name; ?></p>
                 <a class="user-menu__bets" href="pages/my-bets.html">Мои ставки</a>
                 <a class="user-menu__logout" href="../logout.php">Выход</a>
             </div>
@@ -45,7 +45,7 @@
     </div>
 </header>
 
-<main class=<?=isset($container) ? $container : '' ?>>
+<main class=<?=$container ?? '' ?>>
 
     <?= $page_content; ?>
 

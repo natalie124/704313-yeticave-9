@@ -1,9 +1,9 @@
 <?php
 
-require_once('helpers.php');
-require_once('data.php');
-require_once('functions.php');
 require_once('init.php');
+require_once('data.php');
+require_once('helpers.php');
+require_once('functions.php');
 
 if (isset($_SESSION['user'])) {
 // если сессия была открыта, отправляем пользователя на главную страницу

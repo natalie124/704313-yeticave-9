@@ -1,9 +1,9 @@
 <?php
 
-require_once('helpers.php');
-require_once('data.php');
-require_once('functions.php');
 require_once('init.php');
+require_once('data.php');
+require_once('helpers.php');
+require_once('functions.php');
 
 if (!isset($_SESSION['user'])) {
     http_response_code(403);
@@ -93,7 +93,9 @@ $layout_content = include_template('layout.php', [
     'page_content' => $content,
     'nav_content' => $nav_content,
     'title' => 'YetiCave - добавить лот',
-    'flatpickr_css' => '../css/flatpickr.min.css'
+    'flatpickr_css' => '../css/flatpickr.min.css',
+    'is_auth' => $is_auth,
+    'user_name' => $user_name
 ]);
 
 print($layout_content);

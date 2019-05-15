@@ -1,9 +1,10 @@
 <?php
 
-require_once('helpers.php');
-require_once('data.php');
-require_once('functions.php');
 require_once('init.php');
+require_once('data.php');
+require_once('helpers.php');
+require_once('functions.php');
+
 
 $sql_cat = "SELECT id, name, symbol_code FROM categories"; // получаем все категрии из БД
 $categories = get_rows_from_mysql($con, $sql_cat); // преобразуем строки категорий в массив
@@ -29,14 +30,17 @@ if (empty($lot)) {
 // включаем шаблон лота
     $content = include_template('lot.php', [
         'lot' => $lot,
-        'nav_content' => $nav_content
+        'nav_content' => $nav_content,
+        'is_auth' => $is_auth,
     ]);
 };
 
 $layout_content = include_template('layout.php', [
     'page_content' => $content,
     'nav_content' => $nav_content,
-    'title' => 'YetiCave - просмотр лота ' . $lot['title']
+    'title' => 'YetiCave - просмотр лота ' . $lot['title'],
+    'is_auth' => $is_auth,
+    'user_name' =>  $user_name
 ]);
 
 print($layout_content);
