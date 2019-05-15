@@ -21,7 +21,7 @@
   </div>
   <div class="form__item form__item--wide <?=empty($_POST['message']) ? $field_invalid : '' ?>">
     <label for="message">Описание <sup>*</sup></label>
-    <textarea id="message" name="message" placeholder="Напишите описание лота"></textarea>
+    <textarea id="message" name="message" placeholder="Напишите описание лота"><?=$_POST['message'] ?? ""; ?></textarea>
     <span class="form__error">Напишите описание лота</span>
   </div>
   <div class="form__item form__item--file <?=empty($_POST['lot_img']) ? $field_invalid : '' ?>">

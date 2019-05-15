@@ -30,10 +30,7 @@ $layout_content = include_template('layout.php', [
     'page_content' => $content,
     'nav_content' => $nav_content,
     'title' => 'YetiCave - Главная',
-    'is_auth' => $is_auth,
-    'user_name' => $user_name,
-    'container' => 'container',
-    'flatpickr_css' => '#'
+    'container' => 'container'
 ]);
 
 print($layout_content);

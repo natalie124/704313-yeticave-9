@@ -36,11 +36,7 @@ if (empty($lot)) {
 $layout_content = include_template('layout.php', [
     'page_content' => $content,
     'nav_content' => $nav_content,
-    'title' => 'YetiCave - просмотр лота ' . $lot['title'],
-    'is_auth' => $is_auth,
-    'user_name' => $user_name,
-    'container' => '',
-    'flatpickr_css' => '#'
+    'title' => 'YetiCave - просмотр лота ' . $lot['title']
 ]);
 
 print($layout_content);
