@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { //проверяем, что фор�
     $dt_end = $_POST['lot-date'];
     $bet_step = $_POST['lot-step'];
     $cat_id = $_POST['category'];
+    $user_id = $_SESSION['user']['id'];
 
     $required = ['lot-name', 'message', 'lot-rate', 'lot-date', 'lot-step','category']; // определяем список полей для валидации
 
@@ -76,9 +77,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { //проверяем, что фор�
 
     } else { // если ошибок нет, записываем новый лот
 
-        $sql = 'INSERT INTO lots (title, description, img_path, price, dt_end, bet_step, user_id, cat_id) VALUES (?, ?, ?, ?, ?, ?, 1, ?)'; // формируем запрос на добавление
+        $sql = 'INSERT INTO lots (title, description, img_path, price, dt_end, bet_step, user_id, cat_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'; // формируем запрос на добавление
 
-        $stmt = db_get_prepare_stmt($con, $sql, [$title, $description, $img_path, $price, $dt_end, $bet_step, $cat_id]); // формируем подготовленное выражение, на основе SQL-запроса и значений для него
+        $stmt = db_get_prepare_stmt($con, $sql, [$title, $description, $img_path, $price, $dt_end, $bet_step, $user_id, $cat_id]); // формируем подготовленное выражение, на основе SQL-запроса и значений для него
 
         $res = mysqli_stmt_execute($stmt); // выполняем полученное выражение
 
