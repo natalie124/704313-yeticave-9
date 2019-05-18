@@ -51,8 +51,7 @@ function get_row_from_mysql ($con, $sql) {
 };
 
 /**
- * Считает и форматирует дату и время по Гринвичу
- *
+ * Считает и форматирует дату и время
  * @param DATETIME дата и время из БД
  * @return str отформатированные дата и время
  */
@@ -60,14 +59,14 @@ function get_row_from_mysql ($con, $sql) {
 function count_format_date ($date) {
 
     $date = strtotime($date);
-    $time = time() + 3600;
+    $time = time();
 
     $date_diff = $time - $date;
 
     $minutes = floor(($date_diff % 3600) / 60);
     $hours = floor($date_diff / 3600);
 
-    if ($date_diff < 120 && $date_diff >= 0) {
+    if ($date_diff < 120) {
 
         $date = 'минутy назад';
 
@@ -82,6 +81,10 @@ function count_format_date ($date) {
     } elseif ($date_diff < 86400 && $date_diff >= 7200) {
 
         $date = $hours . " " . get_noun_plural_form($hours, 'час', 'часа', 'часов') . " назад";
+
+    } elseif ($date_diff < 172800 && $date_diff >= 86400) {
+
+        $date = "Вчера, в " . date('H:i', $date);
 
     } else {
 
