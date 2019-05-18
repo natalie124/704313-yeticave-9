@@ -15,11 +15,11 @@ function format_price ($price) {
 /**
  * Считает время до заданной даты в формате unix time
  *
- * @param $specified_date str заданная дата
+ * @param $date str заданная дата
  * @return int интервал времени с настоящего момента до заданной даты в формате unix time
  */
-function count_time ($specified_date) {
-    return strtotime($specified_date) - time();
+function count_time ($date) {
+    return strtotime($date) - time();
 };
 
 /**
@@ -48,4 +48,48 @@ function get_row_from_mysql ($con, $sql) {
     $result = mysqli_query($con, $sql);
 
     return ($result) ? mysqli_fetch_assoc($result) : die("Ошибка " . mysqli_error($con));
+};
+
+/**
+ * Считает и форматирует дату и время
+ * @param DATETIME дата и время из БД
+ * @return str отформатированные дата и время
+ */
+
+function count_format_date ($date) {
+
+    $date = strtotime($date);
+    $time = time();
+
+    $date_diff = $time - $date;
+
+    $minutes = floor(($date_diff % 3600) / 60);
+    $hours = floor($date_diff / 3600);
+
+    if ($date_diff < 120) {
+
+        $date = 'минутy назад';
+
+    } elseif ($date_diff < 3600 && $date_diff >= 120) {
+
+        $date = $minutes . " " . get_noun_plural_form($minutes, 'минута', 'минуты', 'минут') . " назад";
+
+    } elseif ($date_diff < 7200 && $date_diff >= 3600) {
+
+        $date = 'час назад';
+
+    } elseif ($date_diff < 86400 && $date_diff >= 7200) {
+
+        $date = $hours . " " . get_noun_plural_form($hours, 'час', 'часа', 'часов') . " назад";
+
+    } elseif ($date_diff < 172800 && $date_diff >= 86400) {
+
+        $date = "Вчера, в " . date('H:i', $date);
+
+    } else {
+
+        $date = date('d.m.y', $date) . " в " . date('H:i', $date);
+    }
+
+    return $date;
 };

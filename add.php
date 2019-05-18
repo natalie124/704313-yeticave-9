@@ -1,9 +1,9 @@
 <?php
 
-require_once('helpers.php');
-require_once('data.php');
-require_once('functions.php');
 require_once('init.php');
+require_once('data.php');
+require_once('helpers.php');
+require_once('functions.php');
 
 if (!isset($_SESSION['user'])) {
     http_response_code(403);
@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { //проверяем, что фор�
     $dt_end = $_POST['lot-date'];
     $bet_step = $_POST['lot-step'];
     $cat_id = $_POST['category'];
+    $user_id = $_SESSION['user']['id'];
 
     $required = ['lot-name', 'message', 'lot-rate', 'lot-date', 'lot-step','category']; // определяем список полей для валидации
 
@@ -76,9 +77,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { //проверяем, что фор�
 
     } else { // если ошибок нет, записываем новый лот
 
-        $sql = 'INSERT INTO lots (title, description, img_path, price, dt_end, bet_step, user_id, cat_id) VALUES (?, ?, ?, ?, ?, ?, 1, ?)'; // формируем запрос на добавление
+        $sql = 'INSERT INTO lots (title, description, img_path, price, dt_end, bet_step, user_id, cat_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'; // формируем запрос на добавление
 
-        $stmt = db_get_prepare_stmt($con, $sql, [$title, $description, $img_path, $price, $dt_end, $bet_step, $cat_id]); // формируем подготовленное выражение, на основе SQL-запроса и значений для него
+        $stmt = db_get_prepare_stmt($con, $sql, [$title, $description, $img_path, $price, $dt_end, $bet_step, $user_id, $cat_id]); // формируем подготовленное выражение, на основе SQL-запроса и значений для него
 
         $res = mysqli_stmt_execute($stmt); // выполняем полученное выражение
 
@@ -93,7 +94,9 @@ $layout_content = include_template('layout.php', [
     'page_content' => $content,
     'nav_content' => $nav_content,
     'title' => 'YetiCave - добавить лот',
-    'flatpickr_css' => '../css/flatpickr.min.css'
+    'flatpickr_css' => '../css/flatpickr.min.css',
+    'is_auth' => $is_auth,
+    'user_name' => $user_name
 ]);
 
 print($layout_content);

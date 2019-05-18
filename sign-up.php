@@ -1,9 +1,9 @@
 <?php
 
-require_once('helpers.php');
-require_once('data.php');
-require_once('functions.php');
 require_once('init.php');
+require_once('data.php');
+require_once('helpers.php');
+require_once('functions.php');
 
 if (isset($_SESSION['user'])) {
 // если сессия была открыта, отправляем пользователя на главную страницу
@@ -86,7 +86,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $layout_content = include_template('layout.php', [
     'page_content' => $content,
     'nav_content' => $nav_content,
-    'title' => 'YetiCave - регистрация аккаунта'
+    'title' => 'YetiCave - регистрация аккаунта',
+    'is_auth' => $is_auth,
+    'user_name' =>  $user_name
 ]);
 
 print($layout_content);

@@ -1,7 +1,8 @@
 <?php
-$is_auth = rand(0, 1);
 
-$user_name = 'natalie'; // укажите здесь ваше имя
+$is_auth = isset($_SESSION['user']) ? true : false;
+$user_name = $is_auth ? $_SESSION['user']['name'] : false;
+$cur_user_id = $is_auth ? $_SESSION['user']['id'] : false;
 
 $categories = [
     "boards" => "Доски и лыжи",

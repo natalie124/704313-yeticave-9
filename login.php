@@ -1,8 +1,8 @@
 <?php
 
 require_once('init.php');
-require_once('helpers.php');
 require_once('data.php');
+require_once('helpers.php');
 require_once('functions.php');
 
 $sql_cat = "SELECT id, name, symbol_code FROM categories"; // получаем все категрии
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // проверяем, что фор
     } else {
 
         $email = mysqli_real_escape_string($con, $_POST['email']); // получаем e-mail из формы
-        $sql = "SELECT * FROM users WHERE email = '$email'"; // получаем данные о пользователе из БД
+        $sql = "SELECT id, name, email, password FROM users WHERE email = '$email'"; // получаем данные о пользователе из БД
         $res = mysqli_query($con, $sql);
 
         $user = $res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null; // если данные получены, преобразуем в массив
@@ -78,7 +78,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // проверяем, что фор
 $layout_content = include_template('layout.php', [
     'page_content' => $content,
     'nav_content' => $nav_content,
-    'title' => 'YetiCave - вход на сайт'
+    'title' => 'YetiCave - вход на сайт',
+    'is_auth' => $is_auth,
+    'user_name' =>  $user_name
 ]);
 
 print($layout_content);
