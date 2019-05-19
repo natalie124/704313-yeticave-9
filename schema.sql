@@ -26,8 +26,13 @@ CREATE TABLE lots (
   cat_id INT
 );
 
-CREATE INDEX  i_l_title ON lots(title);
-CREATE INDEX i_l_dt_add ON lots(dt_add);
+CREATE INDEX i_l_title ON lots(title);
+CREATE INDEX i_l_img_path ON lots(img_path);
+CREATE INDEX  i_l_price ON lots(price);
+CREATE INDEX  i_l_dt_end ON lots(dt_end);
+CREATE INDEX  i_l_bet_step ON lots(bet_step);
+CREATE FULLTEXT INDEX i_l_search ON lots(title, description);
+
 
 CREATE TABLE bets (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -36,6 +41,9 @@ CREATE TABLE bets (
   user_id INT,
   lot_id INT
 );
+
+CREATE INDEX i_b_dt_add ON bets(dt_add);
+CREATE INDEX  i_b_bet_price ON bets(bet_price);
 
 CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -48,3 +56,6 @@ CREATE TABLE users (
 );
 
 CREATE INDEX  i_u_name ON users(name);
+CREATE INDEX  i_u_password ON users(password);
+CREATE INDEX  i_u_contact ON users(contact);
+CREATE UNIQUE INDEX i_u_email ON users(email);

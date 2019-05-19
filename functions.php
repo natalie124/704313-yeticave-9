@@ -59,7 +59,7 @@ function get_row_from_mysql ($con, $sql) {
 function count_format_date ($date) {
 
     $date = strtotime($date);
-    $time = time();
+    $time = time() + 3600;
 
     $date_diff = $time - $date;
 
