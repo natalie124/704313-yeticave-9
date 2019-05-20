@@ -4,9 +4,6 @@ require_once('helpers.php');
 require_once('data.php');
 require_once('functions.php');
 
-
-
-
 $sql_cat = "SELECT id, name, symbol_code FROM categories"; // получаем все категрии
 $categories = get_rows_from_mysql($con, $sql_cat);
 
@@ -17,8 +14,6 @@ $nav_content = include_template('nav.php', [
 $content = include_template('search.php', [
     'nav_content' => $nav_content
 ]);
-
-
 
 $search = $_GET['search'] ?? '';
 

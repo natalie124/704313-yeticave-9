@@ -3,7 +3,7 @@ require_once('init.php');
 require_once('helpers.php');
 require_once('data.php');
 require_once('functions.php');
-
+require_once ('getwinner.php');
 
 $sql_cat = "SELECT id, name, symbol_code FROM categories"; // получаем все категрии
 
@@ -15,7 +15,6 @@ $sql_lots = "SELECT l.id, l.title AS name, l.price AS start_price, l.img_path, l
 
 $categories = get_rows_from_mysql($con, $sql_cat);
 $lots = get_rows_from_mysql($con, $sql_lots);
-
 
 $content = include_template('index.php', [
     'lots' => $lots,

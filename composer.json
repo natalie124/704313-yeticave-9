@@ -1,0 +1,14 @@
+{
+    "name": "natali/704313-yeticave-9",
+    "description": "online auction",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Натали",
+            "email": "t.natalie14@gmail.com"
+        }
+    ],
+    "require": {
+        "swiftmailer/swiftmailer": "^6.2"
+    }
+}
