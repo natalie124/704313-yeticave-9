@@ -2,7 +2,8 @@
 </nav>
 <div class="container">
   <section class="lots">
-    <h2>Результаты поиска по запросу «<span><?=$search; ?></span>»</h2>
+    <h2><?=$search_title; ?></h2>
+    <?php if (!empty($lots)): ?>
     <ul class="lots__list">
       <?php foreach ($lots as $lot): ?>
       <li class="lots__item lot">
@@ -25,8 +26,9 @@
       </li>
       <?php endforeach; ?>
     </ul>
+    <?php endif; ?>
   </section>
-  <?php if (count($pages) > 1): ?>
+  <?php if (!empty($lots) && count($pages) > 1): ?>
   <ul class="pagination-list">
     <li class="pagination-item pagination-item-prev">
       <?php if ((int)$cur_page > 1): ?>

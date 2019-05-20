@@ -1,8 +1,8 @@
 <?= $nav_content; ?>
-<form class="form form--add-lot container <?=$form_invalid ?>" action="add.php" method="post" enctype="multipart/form-data"> <!-- form--invalid -->
+<form class="form form--add-lot container <?=$form_invalid ?>" action="add.php" method="post" enctype="multipart/form-data">
   <h2>Добавление лота</h2>
   <div class="form__container-two">
-    <div class="form__item <?=empty($_POST['lot-name']) ? $field_invalid : '' ?>"> <!-- form__item--invalid -->
+    <div class="form__item <?=empty($_POST['lot-name']) ? $field_invalid : '' ?>">
       <label for="lot-name">Наименование <sup>*</sup></label>
       <input id="lot-name" type="text" name="lot-name" placeholder="Введите наименование лота" value="<?=$_POST['lot-name'] ?? ''; ?>">
       <span class="form__error">Введите наименование лота</span>

@@ -13,7 +13,7 @@
       <?php if ($is_auth && (count_time($lot['dt_end']) > 1) && ($lot['user_id'] !== $cur_user_id) && !$cur_user_bet): ?>
       <div class="lot-item__state">
         <div class="lot-item__timer timer <?=((count_time($lot['dt_end'])) < 3600) ? "timer--finishing" : ""; ?>">
-          <?=gmdate("d:H:i", count_time($lot['dt_end'])); ?>
+          <?=gmdate("H:i", count_time($lot['dt_end'])); ?>
         </div>
         <div class="lot-item__cost-state">
           <div class="lot-item__rate">

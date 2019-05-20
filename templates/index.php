@@ -28,7 +28,7 @@
                         <span class="lot__cost"><?=format_price($lot["start_price"]); ?></span>
                     </div>
                     <div class="lot__timer timer <?=((count_time($lot['dt_end'])) < 3600) ? "timer--finishing" : ""; ?>">
-                        <?=gmdate("d:H:i", count_time($lot['dt_end'])); ?>
+                        <?=gmdate("H:i", count_time($lot['dt_end'])); ?>
                     </div>
                 </div>
             </div>

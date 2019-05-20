@@ -17,7 +17,7 @@
               <span class="lot__cost"><?=format_price($lot["price"]); ?></span>
             </div>
             <div class="lot__timer timer LIMIT $limit OFFSET $offset">
-              <?=gmdate("d:H:i", count_time($lot['dt_end'])); ?>
+              <?=gmdate("H:i", count_time($lot['dt_end'])); ?>
             </div>
           </div>
         </div>

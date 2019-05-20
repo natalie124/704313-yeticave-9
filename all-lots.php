@@ -27,9 +27,9 @@ $pages_count = ceil($items_count / $limit); // получаем число ст�
 $pages = range(1, $pages_count); // получаем массив на основе числа страниц
 
 
-$sql_lots = "SELECT l.id, l.img_path, l.title, l.dt_end, l.price, c.name AS category, c.id AS cat_id FROM lots AS l
+$sql_lots = "SELECT l.id, l.img_path, l.title, l.dt_end, l.dt_add, l.price, c.name AS category, c.id AS cat_id FROM lots AS l
              JOIN categories AS c ON l.cat_id = c.id
-             WHERE NOW() < l.dt_end AND l.win_id IS NULL AND c.id = $cat_id LIMIT $limit OFFSET $offset"; // получаем лоты по категории
+             WHERE NOW() < l.dt_end AND l.win_id IS NULL AND c.id = $cat_id ORDER BY l.dt_add DESC LIMIT $limit OFFSET $offset "; // получаем лоты по категории
 
 
 $lots = get_rows_from_mysql($con, $sql_lots);

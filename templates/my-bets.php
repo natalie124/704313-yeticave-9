@@ -20,12 +20,12 @@
       </td>
       <td class="rates__timer">
         <div class="timer
-                    <?=(count_time($bet['dt_end']) < 1 && $bet['win_id'] !== $cur_user_id) ? 'timer--end' : ''; ?>
-                    <?=(count_time($bet['dt_end']) < 1 && $bet['win_id'] === $cur_user_id) ? 'timer--win' : ''; ?>
-                    <?=(count_time($bet['dt_end']) >= 1 && count_time($bet['dt_end']) < 3600) ? 'timer--finishing' : ''; ?>">
+            <?=(count_time($bet['dt_end']) < 1 && $bet['win_id'] !== $cur_user_id) ? 'timer--end' : ''; ?>
+            <?=(count_time($bet['dt_end']) < 1 && $bet['win_id'] === $cur_user_id) ? 'timer--win' : ''; ?>
+            <?=(count_time($bet['dt_end']) >= 1 && count_time($bet['dt_end']) < 3600) ? 'timer--finishing' : ''; ?>">
             <?=(count_time($bet['dt_end']) < 1 && $bet['win_id'] === $cur_user_id) ? 'Ставка выиграла' : ''; ?>
             <?=(count_time($bet['dt_end']) < 1 && $bet['win_id'] !== $cur_user_id) ? 'Торги окончены' : ''; ?>
-            <?=(count_time($bet['dt_end']) >= 1) ? gmdate("d:H:i", count_time($bet['dt_end'])) : ''; ?></div>
+            <?=(count_time($bet['dt_end']) >= 1) ? gmdate("H:i", count_time($bet['dt_end'])) : ''; ?></div>
       </td>
       <td class="rates__price">
          <?=isset($bet) ? htmlspecialchars(number_format($bet['bet_price'], 0, "", " ") . " р") : ''; ?>

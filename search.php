@@ -11,12 +11,8 @@ $nav_content = include_template('nav.php', [
     'categories' => $categories
 ]);
 
-$content = include_template('search.php', [
-    'nav_content' => $nav_content
-]);
-
 $search = $_GET['search'] ?? ''; // получаем ключевые слова для поиска из формы поиска, если они были отправлены
-
+$search_title = 'Результаты поиска по запросу ' . '«' . $search . '»';
 
 if ($search) { // проверяем, был ли отправлен запрос на поиск
 
@@ -37,7 +33,8 @@ if ($search) { // проверяем, был ли отправлен запро�
 
     $sql_lots = "SELECT l.id, l.title, l.img_path, l.price, l.dt_end, c.name AS category FROM lots AS l
                  JOIN categories AS c ON l.cat_id = c.id
-                 WHERE MATCH(l.title, l.description) AGAINST(?) LIMIT $limit OFFSET $offset"; // получаем лоты в соответствии с поисковым запросом по полям title и description
+                 WHERE NOW() < l.dt_end AND l.win_id IS NULL AND MATCH(l.title, l.description) AGAINST(?) ORDER BY l.dt_add DESC
+                 LIMIT $limit OFFSET $offset"; // получаем лоты в соответствии с поисковым запросом по полям title и description
 
     $stmt = db_get_prepare_stmt($con, $sql_lots, [$search]);
     mysqli_stmt_execute($stmt);
@@ -51,7 +48,13 @@ if ($search) { // проверяем, был ли отправлен запро�
         'search' => $search,
         'cur_page' => $cur_page,
         'pages' => $pages,
-        'search' => $search
+        'search' => $search,
+        'search_title' => $search_title
+    ]);
+} else {
+    $content = include_template('search.php', [
+        'nav_content' => $nav_content,
+        'search_title' => 'Введите текст запроса'
     ]);
 }
 
