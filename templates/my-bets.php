@@ -11,7 +11,7 @@
           <img src="<?=htmlspecialchars($bet['img_path']); ?>" width="54" height="40" alt="<?=htmlspecialchars($bet['title']); ?>">
         </div>
         <div>
-          <h3 class="rates__title"><a href="lot.php?lot_id=<?=$bet['lot_id']?>"><?=htmlspecialchars($bet['title']); ?></a></h3>
+          <h3 class="rates__title"><a href="lot.php?lot_id=<?=(int)$bet['lot_id']?>"><?=htmlspecialchars($bet['title']); ?></a></h3>
           <p><?=(count_time($bet['dt_end']) < 1 && $bet['win_id'] === $cur_user_id) ? htmlspecialchars($bet['contact']) : ''; ?></p>
         </div>
       </td>

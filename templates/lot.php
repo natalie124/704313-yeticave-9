@@ -25,17 +25,17 @@
           </div>
         </div>
         <form class="lot-item__form" action="" method="post" autocomplete="off">
-          <p class="lot-item__form-item form__item <?=count($errors) ? 'form__item--invalid' : ''; ?>">
+          <p class="lot-item__form-item form__item <?=empty($errors) ? '' : 'form__item--invalid'; ?>">
             <label for="cost">Ваша ставка</label>
             <input id="cost" type="text" name="cost" placeholder="<?=number_format($min_bet, 0, "", " "); ?>">
-            <span class="form__error"><?=count($errors) ? $errors['cost'] : ''; ?></span>
+            <span class="form__error"><?=$errors['cost'] ?? ''; ?></span>
           </p>
           <button type="submit" class="button">Сделать ставку</button>
         </form>
       </div>
       <?php endif; ?>
       <div class="history">
-        <h3>История ставок (<span><?=count($bets); ?></span>)</h3>
+        <h3>История ставок (<span><?=count($bets) ?? 0; ?></span>)</h3>
         <table class="history__list">
           <?php foreach ($bets as $bet): ?>
           <tr class="history__item">
@@ -49,4 +49,3 @@
     </div>
   </div>
 </section>
-
