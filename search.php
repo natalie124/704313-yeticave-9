@@ -10,7 +10,7 @@ $nav_content = include_template('nav.php', [
     'categories' => $categories
 ]);
 
-$search = $_GET['search'] ?? ''; // получаем ключевые слова для поиска из формы поиска, если они были отправлены
+$search = trim($_GET['search']) ?? ''; // получаем ключевые слова для поиска из формы поиска, если они были отправлены
 
 if ($search) { // проверяем, был ли отправлен запрос на поиск
 
@@ -55,7 +55,7 @@ $layout_content = include_template('layout.php', [
     'nav_content' => $nav_content,
     'title' => 'YetiCave - Поиск лота',
     'is_auth' => $is_auth,
-    'user_name' =>  $user_name,
+    'user_name' => $user_name,
 ]);
 
 print($layout_content);

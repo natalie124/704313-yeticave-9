@@ -30,7 +30,7 @@ $layout_content = include_template('layout.php', [
     'title' => 'YetiCave - Главная',
     'container' => 'container',
     'is_auth' => $is_auth,
-    'user_name' =>  $user_name
+    'user_name' => $user_name
 ]);
 
 print($layout_content);

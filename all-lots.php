@@ -25,7 +25,7 @@ $nav_content = include_template('nav.php', [
 
 if ($cat_id > count($categories) || $cat_id < 1 || !in_array($cur_page, $pages)) {
 
-    $content = include_template ('404.php', [
+    $content = include_template('404.php', [
         'nav_content' => $nav_content
     ]);
 } else {
@@ -38,7 +38,7 @@ if ($cat_id > count($categories) || $cat_id < 1 || !in_array($cur_page, $pages))
 
     $lots = get_rows_from_mysql($con, $sql_lots);
 
-    $title = empty($lots) ? 'Лоты в категории ' . '«' . $cat_title  . '»' . ' отсутствуют': 'Все лоты в категории ' . '«' . $cat_title  . '»';
+    $title = empty($lots) ? 'Лоты в категории ' . '«' . $cat_title . '»' . ' отсутствуют' : 'Все лоты в категории ' . '«' . $cat_title . '»';
 
     $content = include_template('all-lots.php', [
         'nav_content' => $nav_content,
@@ -53,9 +53,9 @@ if ($cat_id > count($categories) || $cat_id < 1 || !in_array($cur_page, $pages))
 $layout_content = include_template('layout.php', [
     'page_content' => $content,
     'nav_content' => $nav_content,
-    'title' => 'YetiCave - Все лоты в категории ' . '«' .  $cat_title . '»',
+    'title' => 'YetiCave - Все лоты в категории ' . '«' . $cat_title . '»',
     'is_auth' => $is_auth,
-    'user_name' =>  $user_name
+    'user_name' => $user_name
 ]);
 
 print($layout_content);

@@ -6,7 +6,7 @@ require_once('functions.php');
 
 if (!isset($_SESSION['user'])) {
     http_response_code(403);
-    die('У Вас нет прав для просмотра этой страницы' . '<br>' . '<a href="login.php">Вход</a>'  . '<br>' .  '<a href="sign-up.php">Регистрация</a>' . '<br>' . '<a href="index.php">На главную</a>');
+    die('У Вас нет прав для просмотра этой страницы' . '<br>' . '<a href="login.php">Вход</a>' . '<br>' . '<a href="sign-up.php">Регистрация</a>' . '<br>' . '<a href="index.php">На главную</a>');
 }
 
 $sql_cat = "SELECT id, name, symbol_code FROM categories";
@@ -33,7 +33,7 @@ $layout_content = include_template('layout.php', [
     'nav_content' => $nav_content,
     'title' => 'YetiCave - Moи ставки',
     'is_auth' => $is_auth,
-    'user_name' =>  $user_name,
+    'user_name' => $user_name,
 ]);
 
 print($layout_content);

@@ -6,7 +6,7 @@ require_once('functions.php');
 
 if (isset($_SESSION['user'])) {
 // если сессия была открыта, отправляем пользователя на главную страницу
-    header("Location: index.php");
+    header('Location: index.php');
 }
 
 $sql_cat = "SELECT id, name, symbol_code FROM categories"; // получаем все категрии
@@ -18,10 +18,10 @@ $nav_content = include_template('nav.php', [
 ]); // подключаем меню
 
 $content = include_template('sign-up.php', [
-        'nav_content' => $nav_content
+    'nav_content' => $nav_content
 ]); // подключаем сценарий регистрации аккаунта
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $email = trim($_POST['email']);
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
@@ -38,21 +38,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (empty($email)) {
-            $errors['email'] = 'Введите e-mail'; // если e-mail пустой, записываем ошибку
-    }
-
-    if (empty($errors)) { // если ошибок нет, проверяем e-mail
-
+        $errors['email'] = 'Введите e-mail'; // если e-mail пустой, записываем ошибку
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {// проверяем соответствие e-mail требуемому формату
+        $errors['email'] = 'Введите корректный e-mail'; // если формат не подходит, записываем ошибку
+    } else {
         $email = mysqli_real_escape_string($con, $email);
         $sql = "SELECT id FROM users WHERE email = '$email'";
         $res = mysqli_query($con, $sql);
 
         if (mysqli_num_rows($res) > 0) {
             $errors['email'] = 'Пользователь с этим email уже зарегистрирован'; // если такой e-mail в БД уже есть, записываем ошибку
-        }
-
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { // проверяем соответствие e-mail требуемому формату
-            $errors['email'] = 'Введите корректный e-mail'; // если формат не подходит, записываем ошибку
         }
     }
 
@@ -66,12 +61,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $sql = 'INSERT INTO users (email, password, name, contact) VALUES (?, ?, ?, ?)'; // формируем запрос на добавление
 
-        $stmt = db_get_prepare_stmt($con, $sql, [$email, $password, $name, $contact]); // формируем подготовленное выражение, на основе SQL-запроса и значений для него
+        $stmt = db_get_prepare_stmt($con, $sql, [
+            $email,
+            $password,
+            $name,
+            $contact
+        ]); // формируем подготовленное выражение, на основе SQL-запроса и значений для него
 
         $res = mysqli_stmt_execute($stmt); // выполняем полученное выражение
 
-        if($res) { // если запрос выполнен успешно, то перенаправляем пользователя на страницу входа
-            header("Location: login.php");
+        if ($res) { // если запрос выполнен успешно, то перенаправляем пользователя на страницу входа
+            header('Location: login.php');
         }
     }
 }
@@ -81,7 +81,7 @@ $layout_content = include_template('layout.php', [
     'nav_content' => $nav_content,
     'title' => 'YetiCave - регистрация аккаунта',
     'is_auth' => $is_auth,
-    'user_name' =>  $user_name
+    'user_name' => $user_name
 ]);
 
 print($layout_content);

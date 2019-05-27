@@ -6,7 +6,7 @@ require_once('functions.php');
 
 if (!isset($_SESSION['user'])) {
     http_response_code(403);
-    die('У Вас нет прав для просмотра этой страницы' . '<br>' . '<a href="login.php">Вход</a>'  . '<br>' .  '<a href="sign-up.php">Регистрация</a>' . '<br>' . '<a href="index.php">На главную</a>');
+    die('У Вас нет прав для просмотра этой страницы' . '<br>' . '<a href="login.php">Вход</a>' . '<br>' . '<a href="sign-up.php">Регистрация</a>' . '<br>' . '<a href="index.php">На главную</a>');
 }
 
 $sql_cat = 'SELECT id, name, symbol_code FROM categories'; // получаем все категрии
@@ -18,11 +18,11 @@ $nav_content = include_template('nav.php', [
 ]); // подключаем меню
 
 $content = include_template('add.php', [
-        'nav_content' => $nav_content,
-        'categories' => $categories
+    'nav_content' => $nav_content,
+    'categories' => $categories
 ]); // подключаем сценарий добавления лота
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') { //проверяем, что форма была отправлена
+if ($_SERVER['REQUEST_METHOD'] === 'POST') { //проверяем, что форма была отправлена
 
     $title = $_POST['lot-name'];
     $description = $_POST['message'];
@@ -32,7 +32,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { //проверяем, что фор�
     $cat_id = (int)$_POST['category'];
     $user_id = (int)$_SESSION['user']['id'];
 
-    $required = ['lot-name', 'message', 'lot-rate', 'lot-date', 'lot-step','category']; // определяем список полей для валидации
+    $required = [
+        'lot-name',
+        'message',
+        'lot-rate',
+        'lot-date',
+        'lot-step',
+        'category'
+    ]; // определяем список полей для валидации
 
     $errors = []; // определяем пустой массив, который будем заполнять ошибками валидации
 
@@ -53,9 +60,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { //проверяем, что фор�
 
         } else {
 
-            $filename = uniqid() . ($file_type == 'image/png' ? '.png' : '.jpg'); // меняем имя файла на новое уникальное
+            $filename = uniqid() . ($file_type === 'image/png' ? '.png' : '.jpg'); // меняем имя файла на новое уникальное
             $img_path = 'uploads/' . $filename; // определянм путь к файлу
-            move_uploaded_file($_FILES['lot_img']['tmp_name'], $img_path); // перемещаем файл из временной папки в постоянную
+            move_uploaded_file($_FILES['lot_img']['tmp_name'],
+                $img_path); // перемещаем файл из временной папки в постоянную
         }
     } else {
 
@@ -73,11 +81,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { //проверяем, что фор�
 
         $sql = 'INSERT INTO lots (title, description, img_path, price, dt_end, bet_step, user_id, cat_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'; // формируем запрос на добавление
 
-        $stmt = db_get_prepare_stmt($con, $sql, [$title, $description, $img_path, $price, $dt_end, $bet_step, $user_id, $cat_id]); // формируем подготовленное выражение, на основе SQL-запроса и значений для него
+        $stmt = db_get_prepare_stmt($con, $sql, [
+            $title,
+            $description,
+            $img_path,
+            $price,
+            $dt_end,
+            $bet_step,
+            $user_id,
+            $cat_id
+        ]); // формируем подготовленное выражение, на основе SQL-запроса и значений для него
 
         $res = mysqli_stmt_execute($stmt); // выполняем полученное выражение
 
-        if($res) { // если запрос выполнен успешно, то получаем ID нового лота и перенаправляем пользователя на страницу с его просмотром
+        if ($res) { // если запрос выполнен успешно, то получаем ID нового лота и перенаправляем пользователя на страницу с его просмотром
             $lot_id = mysqli_insert_id($con);
             header('Location: lot.php?lot_id= ' . (int)$lot_id);
         }
