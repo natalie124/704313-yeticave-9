@@ -11,13 +11,14 @@ $nav_content = include_template('nav.php', [
 ]);
 
 $search = trim($_GET['search']) ?? ''; // получаем ключевые слова для поиска из формы поиска, если они были отправлены
+$search = htmlspecialchars($search);
 
 if ($search) { // проверяем, был ли отправлен запрос на поиск
 
     $offset = ($cur_page - 1) * $limit; // определяем смещение элемента
 
-    $sql_cnt = "SELECT count(*) AS cnt FROM lots
-                WHERE MATCH(title, description) AGAINST('$search')"; // формируем запрос для получения общего количества элементов
+    $sql_cnt = "SELECT count(*) AS cnt FROM lots AS l
+                WHERE MATCH(title, description) AGAINST('$search') AND NOW() < l.dt_end AND l.win_id IS NULL"; // формируем запрос для получения общего количества элементов
 
     $pages = get_pages($con, $sql_cnt, $limit); // получаем количество страниц на основе запроса
 

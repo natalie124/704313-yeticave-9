@@ -115,18 +115,20 @@ function count_format_date($date)
  * @param $con str ресурс соединения
  * @param $sql_cnt str строка запроса для получения общего количества элементов
  * @param $limit int число элементов на странице
- * @return array массив с данными
+ * @return array массив с данными - если запрос выполнен, иначе 0
  */
 
 function get_pages($con, $sql_cnt, $limit)
 {
-
     $res_cnt = mysqli_query($con, $sql_cnt);
-    $items_count = mysqli_fetch_assoc($res_cnt)['cnt'];
 
-    $pages_count = ceil($items_count / $limit);
+    if ($res_cnt) {
 
-    return $pages = range(1, $pages_count);
+        $items_count = mysqli_fetch_assoc($res_cnt)['cnt'];
+        $pages_count = ceil($items_count / $limit);
+    }
+
+    return $pages = $res_cnt ? range(1, $pages_count) : 0;
 }
 
 ;

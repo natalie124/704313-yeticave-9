@@ -23,8 +23,8 @@ $content = include_template('login.php', [
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') { // проверяем, что форма была отправлена
 
-    $email = trim($_POST['email']);
-    $password = $_POST['password'];
+    $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+    $password = $_POST['password'] ?? '';
     $errors = []; // определяем список полей для валидации
 
     if (empty($email)) {

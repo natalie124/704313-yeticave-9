@@ -24,13 +24,13 @@ $content = include_template('add.php', [
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') { //проверяем, что форма была отправлена
 
-    $title = $_POST['lot-name'];
-    $description = $_POST['message'];
-    $price = ceil($_POST['lot-rate']);
-    $dt_end = $_POST['lot-date'];
-    $bet_step = ceil($_POST['lot-step']);
-    $cat_id = (int)$_POST['category'];
-    $user_id = (int)$_SESSION['user']['id'];
+    $title = $_POST['lot-name'] ?? '';
+    $description = $_POST['message'] ?? '';
+    $price = isset($_POST['lot-rate']) ? ceil($_POST['lot-rate']) : '';
+    $dt_end = $_POST['lot-date'] ?? '';
+    $bet_step = isset($_POST['lot-step']) ? ceil($_POST['lot-step']) : '';
+    $cat_id = isset($_POST['category']) ? (int)$_POST['category'] : '';
+    $user_id = $cur_user_id;
 
     $required = [
         'lot-name',
@@ -47,6 +47,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //проверяем, что фор
         if (empty($_POST[$key])) {
             $errors[$key] = 'Это поле надо заполнить'; // если есть пустое поле, записываем ошибку
         }
+    }
+
+    if (!empty($_POST['category']) && ($cat_id > count($categories) || $cat_id < 1 || !is_numeric($_POST['category']))) {
+        $errors['category'] = 'Нет такой категории';
+    }
+
+    if (!empty($dt_end) && (strtotime($dt_end) < (time() + 86400) || !is_date_valid($dt_end))) {
+        $errors['lot-date'] = 'Введите дату завершения торгов';
     }
 
     if (!empty($_FILES['lot_img']['name'])) { // проверяем был ли загружен файл

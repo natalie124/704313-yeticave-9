@@ -23,10 +23,10 @@ $content = include_template('sign-up.php', [
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $email = trim($_POST['email']);
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $name = $_POST['name'];
-    $contact = $_POST['message'];
+    $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+    $password = isset($_POST['password']) ? password_hash($_POST['password'], PASSWORD_DEFAULT) : '';
+    $name = $_POST['name'] ?? '';
+    $contact = $_POST['message'] ?? '';
 
     $required = ['password', 'name', 'message']; // определяем список полей для валидации
     $errors = [];

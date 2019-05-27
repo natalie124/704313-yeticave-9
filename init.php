@@ -17,5 +17,5 @@ $is_auth = isset($_SESSION['user']) ? true : false;
 $user_name = $is_auth ? $_SESSION['user']['name'] : false;
 $cur_user_id = $is_auth ? $_SESSION['user']['id'] : false;
 
-$limit = 9; //количество элементов, размещенных на одной странице
-$cur_page = $_GET['page'] ?? 1; // получаем номер текущей страницы, по умолчанию 1
+$limit = 3; //количество элементов, размещенных на одной странице
+$cur_page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // получаем номер текущей страницы, по умолчанию 1

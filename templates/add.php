@@ -58,11 +58,7 @@
                    value="<?= isset($_POST['lot-step']) ? ceil($_POST['lot-step']) : ''; ?>">
             <span class="form__error">Введите шаг ставки</span>
         </div>
-        <div class="form__item form__item--small
-    <?= isset($errors['lot-date']) ? 'form__item--invalid' : ''; ?>
-    <?= isset($_POST['lot-date']) && !is_date_valid($_POST['lot-date']) ? 'form__item--invalid' : ''; ?>
-    <?= isset($_POST['lot-date']) && (strtotime($_POST['lot-date']) < (time() + 86400)) ? 'form__item--invalid' : ''; ?>
-    ">
+        <div class="form__item form__item--small <?= isset($errors['lot-date']) ? 'form__item--invalid' : ''; ?>">
             <label for="lot-date">Дата окончания торгов <sup>*</sup></label>
             <input class="form__input-date" id="lot-date" type="text" name="lot-date"
                    placeholder="Введите дату в формате ГГГГ-ММ-ДД" value="<?= $_POST['lot-date'] ?? ''; ?>">

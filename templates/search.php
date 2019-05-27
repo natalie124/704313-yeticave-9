@@ -2,7 +2,7 @@
 </nav>
 <div class="container">
     <section class="lots">
-        <h2><?= $search_title; ?></h2>
+        <h2><?= htmlspecialchars($search_title); ?></h2>
         <?php if (!empty($lots)): ?>
             <ul class="lots__list">
                 <?php foreach ($lots as $lot): ?>
