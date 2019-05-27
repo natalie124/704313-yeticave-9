@@ -1,7 +1,6 @@
 <?php
 
 require_once('init.php');
-require_once('data.php');
 require_once('helpers.php');
 require_once('functions.php');
 
@@ -50,7 +49,7 @@ if (empty($lot)) {
     ]);
 };
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') { // проверяем, была ли форма
+if ($_SERVER['REQUEST_METHOD'] === 'POST') { // проверяем, была ли форма
 
     $errors = []; // создаем пустой массив, в который будем записывать ошибки валидации формы
     $errors_class = 'form__item--invalid'; // добавляем этот класс к форме, если есть ошибки
@@ -86,11 +85,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // проверяем, была ли
 
         $sql = 'INSERT INTO bets (bet_price, user_id, lot_id) VALUES (?, ?, ?)'; // формируем запрос на добавление
 
-        $stmt = db_get_prepare_stmt($con, $sql, [$bet, $cur_user_id, $lot_id]); // формируем подготовленное выражение, на основе SQL-запроса и значений для него
+        $stmt = db_get_prepare_stmt($con, $sql, [
+            $bet,
+            $cur_user_id,
+            $lot_id
+        ]); // формируем подготовленное выражение, на основе SQL-запроса и значений для него
 
         $res = mysqli_stmt_execute($stmt); // выполняем полученное выражение
 
-        if($res) { // если запрос выполнен успешно, то добавляем новую ставку в БД
+        if ($res) { // если запрос выполнен успешно, то добавляем новую ставку в БД
 
             $sql_bets = "SELECT b.id, b.dt_add, b.bet_price, u.name, u.id  AS user_id FROM bets AS b
             LEFT JOIN users AS u ON u.id = b.user_id
@@ -126,5 +129,3 @@ $layout_content = include_template('layout.php', [
 ]);
 
 print($layout_content);
-
-?>

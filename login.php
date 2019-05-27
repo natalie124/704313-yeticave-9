@@ -1,11 +1,15 @@
 <?php
 
 require_once('init.php');
-require_once('data.php');
 require_once('helpers.php');
 require_once('functions.php');
 
-$sql_cat = "SELECT id, name, symbol_code FROM categories"; // получаем все категрии
+if (isset($_SESSION['user'])) {
+// если сессия была открыта, отправляем пользователя на главную страницу
+    header('Location: index.php');
+}
+
+$sql_cat = 'SELECT id, name, symbol_code FROM categories'; // получаем все категрии
 
 $categories = get_rows_from_mysql($con, $sql_cat); // преобразуем строки категорий в массив
 
@@ -14,19 +18,14 @@ $nav_content = include_template('nav.php', [
 ]); // подключаем меню
 
 $content = include_template('login.php', [
-        'nav_content' => $nav_content,
-        'form_invalid' => '',
-        'field_invalid' => ''
+    'nav_content' => $nav_content
 ]); // подключаем сценарий входа
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') { // проверяем, что форма была отправлена
+if ($_SERVER['REQUEST_METHOD'] === 'POST') { // проверяем, что форма была отправлена
 
-    $email = $_POST['email'];
+    $email = trim($_POST['email']);
     $password = $_POST['password'];
-
     $errors = []; // определяем список полей для валидации
-    $errors_class = 'form__item--invalid'; // определяем пустой массив, который будем заполнять ошибками валидации
-
 
     if (empty($email)) {
 
@@ -48,7 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // проверяем, что фор
 
         $errors['password'] = 'Введите пароль'; // если поле с паролем пустое, записываем ошибку
 
-    } elseif (!password_verify($password, $user['password'])) { // сравниваем хеш пароля от пользователя с хешем пароля из БД
+    } elseif (!password_verify($password,
+        $user['password'])) { // сравниваем хеш пароля от пользователя с хешем пароля из БД
 
         $errors['password'] = 'Неверный email или пароль'; // если пароли не совпадают, записываем ошибку
     }
@@ -58,29 +58,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // проверяем, что фор
 
         $content = include_template('login.php', [
             'nav_content' => $nav_content,
-            'form_invalid' => 'form--invalid',
-            'field_invalid' => $errors_class,
             'errors' => $errors
         ]);
 
     } else { // если ошибок в форме нет, открываем для пользователя сессию
 
         $_SESSION['user'] = $user;
-        header("Location: index.php");
+        header('Location: index.php');
         exit();
     }
 
-} elseif (isset($_SESSION['user'])) {
-// если сессия была открыта, отправляем пользователя на главную страницу
-       header("Location: index.php");
-  }
+}
 
 $layout_content = include_template('layout.php', [
     'page_content' => $content,
     'nav_content' => $nav_content,
     'title' => 'YetiCave - вход на сайт',
     'is_auth' => $is_auth,
-    'user_name' =>  $user_name
+    'user_name' => $user_name
 ]);
 
 print($layout_content);

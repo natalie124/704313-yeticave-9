@@ -1,7 +1,6 @@
 <?php
 require_once('init.php');
 require_once('helpers.php');
-require_once('data.php');
 require_once('functions.php');
 
 $sql_cat = "SELECT id, name, symbol_code FROM categories"; // получаем все категрии
@@ -11,25 +10,16 @@ $nav_content = include_template('nav.php', [
     'categories' => $categories
 ]);
 
-$search = $_GET['search'] ?? ''; // получаем ключевые слова для поиска из формы поиска, если они были отправлены
-$search_title = 'Результаты поиска по запросу ' . '«' . $search . '»';
+$search = trim($_GET['search']) ?? ''; // получаем ключевые слова для поиска из формы поиска, если они были отправлены
 
 if ($search) { // проверяем, был ли отправлен запрос на поиск
 
-    $cur_page = $_GET['page'] ?? 1; // получаем номер текущей страницы, по умолчанию 1
-    $limit = 9; // определяем количество элементов, размещенных на одной странице
     $offset = ($cur_page - 1) * $limit; // определяем смещение элемента
 
     $sql_cnt = "SELECT count(*) AS cnt FROM lots
                 WHERE MATCH(title, description) AGAINST('$search')"; // формируем запрос для получения общего количества элементов
 
-    $res_cnt = mysqli_query($con, $sql_cnt); // получаем результат запроса из БД
-
-    $items_count = mysqli_fetch_assoc($res_cnt)['cnt']; // преобразуем результат запроса в массив
-
-    $pages_count = ceil($items_count / $limit); // получаем число страниц исходя из общего количества элементов и элементов на одной странице
-
-    $pages = range(1, $pages_count); // получаем массив на основе числа страниц
+    $pages = get_pages($con, $sql_cnt, $limit); // получаем количество страниц на основе запроса
 
     $sql_lots = "SELECT l.id, l.title, l.img_path, l.price, l.dt_end, c.name AS category FROM lots AS l
                  JOIN categories AS c ON l.cat_id = c.id
@@ -41,6 +31,8 @@ if ($search) { // проверяем, был ли отправлен запро�
     $result = mysqli_stmt_get_result($stmt);
 
     $lots = mysqli_fetch_all($result, MYSQLI_ASSOC); // получаем массив с данными на основе поискового запроса
+
+    $search_title = empty($lots) ? 'По запросу ' . '«' . $search . '»' . ' ничего не найдено' : 'Результаты поиска по запросу ' . '«' . $search . '»';
 
     $content = include_template('search.php', [ // включаем шаблон поиска с данными поискового запроса
         'nav_content' => $nav_content,
@@ -63,9 +55,7 @@ $layout_content = include_template('layout.php', [
     'nav_content' => $nav_content,
     'title' => 'YetiCave - Поиск лота',
     'is_auth' => $is_auth,
-    'user_name' =>  $user_name,
+    'user_name' => $user_name,
 ]);
 
 print($layout_content);
-
-?>

@@ -1,12 +1,16 @@
 <?php
 
 require_once('init.php');
-require_once('data.php');
 require_once('helpers.php');
 require_once('functions.php');
 
-$sql_cat = "SELECT id, name, symbol_code FROM categories"; // получаем все категрии
-$sql_bets = "SELECT l.id, l.img_path,l.win_id, l.title, c.name AS category, l.dt_end, b.bet_price, b.user_id AS bet_user_id, b.dt_add, u.contact  FROM bets AS b
+if (!isset($_SESSION['user'])) {
+    http_response_code(403);
+    die('У Вас нет прав для просмотра этой страницы' . '<br>' . '<a href="login.php">Вход</a>' . '<br>' . '<a href="sign-up.php">Регистрация</a>' . '<br>' . '<a href="index.php">На главную</a>');
+}
+
+$sql_cat = "SELECT id, name, symbol_code FROM categories";
+$sql_bets = "SELECT l.id AS lot_id, l.img_path,l.win_id, l.title, c.name AS category, l.dt_end, b.bet_price, b.user_id AS bet_user_id, b.dt_add, u.contact  FROM bets AS b
              JOIN lots AS l ON b.lot_id = l.id
              JOIN users AS u ON l.user_id = u.id
              JOIN categories AS c ON l.cat_id = c.id
@@ -29,9 +33,7 @@ $layout_content = include_template('layout.php', [
     'nav_content' => $nav_content,
     'title' => 'YetiCave - Moи ставки',
     'is_auth' => $is_auth,
-    'user_name' =>  $user_name,
+    'user_name' => $user_name,
 ]);
 
 print($layout_content);
-
-?>
