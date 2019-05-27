@@ -31,7 +31,7 @@
                         <?= (count_time($bet['dt_end']) >= 1) ? gmdate("H:i", count_time($bet['dt_end'])) : ''; ?></div>
                 </td>
                 <td class="rates__price">
-                    <?= isset($bet) ? htmlspecialchars(number_format($bet['bet_price'], 0, "", " ") . " р") : ''; ?>
+                    <?= isset($bet) ? htmlspecialchars(number_format($bet['bet_price'], 0, '', ' ') . ' р') : ''; ?>
                 </td>
                 <td class="rates__time">
                     <?= count_format_date($bet['dt_add']); ?>

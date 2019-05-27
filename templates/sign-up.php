@@ -16,7 +16,7 @@
     </div>
     <div class="form__item <?= isset($errors['name']) ? 'form__item--invalid' : '' ?>">
         <label for="name">Имя <sup>*</sup></label>
-        <input id="name" type="text" name="name" placeholder="Введите имя" value="<?= $_POST['name'] ?? ""; ?>">
+        <input id="name" type="text" name="name" placeholder="Введите имя" value="<?= $_POST['name'] ?? ''; ?>">
         <span class="form__error">Введите имя</span>
     </div>
     <div class="form__item <?= isset($errors['message']) ? 'form__item--invalid' : '' ?>">

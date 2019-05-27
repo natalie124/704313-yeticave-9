@@ -13,7 +13,7 @@
             <?php if ($is_auth && (count_time($lot['dt_end']) > 1) && ($lot['user_id'] !== $cur_user_id) && !$cur_user_bet): ?>
                 <div class="lot-item__state">
                     <div
-                        class="lot-item__timer timer <?= ((count_time($lot['dt_end'])) < 3600) ? "timer--finishing" : ""; ?>">
+                        class="lot-item__timer timer <?= ((count_time($lot['dt_end'])) < 3600) ? 'timer--finishing' : ''; ?>">
                         <?= gmdate("H:i", count_time($lot['dt_end'])); ?>
                     </div>
                     <div class="lot-item__cost-state">
@@ -42,8 +42,8 @@
                     <?php foreach ($bets as $bet): ?>
                         <tr class="history__item">
                             <td class="history__name"><?= htmlspecialchars($bet['name']); ?></td>
-                            <td class="history__price"><?= htmlspecialchars(number_format($bet['bet_price'], 0, "",
-                                        " ") . " р"); ?></td>
+                            <td class="history__price"><?= htmlspecialchars(number_format($bet['bet_price'], 0, '',
+                                        ' ') . ' р'); ?></td>
                             <td class="history__time"><?= count_format_date($bet['dt_add']); ?></td>
                         </tr>
                     <?php endforeach; ?>
