@@ -4,7 +4,7 @@ require_once('init.php');
 require_once('helpers.php');
 require_once('functions.php');
 
-$lot_id = (int)$_GET["lot_id"] ?? 0; //получаем id текущего лота если он есть
+$lot_id = isset($_GET["lot_id"]) ? (int)$_GET["lot_id"] : 0; //получаем id текущего лота если он есть
 
 $sql_cat = "SELECT id, name, symbol_code FROM categories"; // получаем все категрии из БД
 $sql_lot = "SELECT l.*, c.name, b.bet_price, b.user_id AS bet_id FROM lots AS l

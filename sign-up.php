@@ -25,8 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $email = isset($_POST['email']) ? trim($_POST['email']) : '';
     $password = isset($_POST['password']) ? password_hash($_POST['password'], PASSWORD_DEFAULT) : '';
-    $name = $_POST['name'] ?? '';
-    $contact = $_POST['message'] ?? '';
+    $name = isset($_POST['name']) ? strip_tags($_POST['name']) : '';
+    $contact = isset($_POST['message']) ? strip_tags($_POST['message']) : '';
 
     $required = ['password', 'name', 'message']; // определяем список полей для валидации
     $errors = [];
