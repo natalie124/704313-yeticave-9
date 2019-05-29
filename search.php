@@ -15,12 +15,15 @@ $search = htmlspecialchars($search);
 
 if ($search) { // проверяем, был ли отправлен запрос на поиск
 
-    $offset = ($cur_page - 1) * $limit; // определяем смещение элемента
-
     $sql_cnt = "SELECT count(*) AS cnt FROM lots AS l
-                WHERE MATCH(title, description) AGAINST('$search') AND NOW() < l.dt_end AND l.win_id IS NULL"; // формируем запрос для получения общего количества элементов
+                WHERE NOW() < l.dt_end AND l.win_id IS NULL AND MATCH(l.title, l.description) AGAINST(?)"; // формируем запрос для получения общего количества элементов
 
-    $pages = get_pages($con, $sql_cnt, $limit); // получаем количество страниц на основе запроса
+    $stmt_cnt = db_get_prepare_stmt($con, $sql_cnt, [$search]);
+    mysqli_stmt_execute($stmt_cnt);
+    $res_cnt = mysqli_stmt_get_result($stmt_cnt);
+    $pages = get_pages($res_cnt, $limit); // получаем количество страниц на основе запроса
+
+    $offset = ($cur_page - 1) * $limit; // определяем смещение элемента
 
     $sql_lots = "SELECT l.id, l.title, l.img_path, l.price, l.dt_end, c.name AS category FROM lots AS l
                  JOIN categories AS c ON l.cat_id = c.id
@@ -44,7 +47,9 @@ if ($search) { // проверяем, был ли отправлен запро�
         'search' => $search,
         'search_title' => $search_title
     ]);
+
 } else {
+
     $content = include_template('search.php', [
         'nav_content' => $nav_content,
         'search_title' => 'Введите текст запроса'

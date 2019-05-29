@@ -15,7 +15,7 @@ mysqli_set_charset($con, 'utf8');
 
 $is_auth = isset($_SESSION['user']) ? true : false;
 $user_name = $is_auth ? strip_tags($_SESSION['user']['name']) : false;
-$cur_user_id = $is_auth ? (int)$_SESSION['user']['id'] : false;
+$cur_user_id = $is_auth ? htmlspecialchars($_SESSION['user']['id']) : false;
 
 $limit = 9; //количество элементов, размещенных на одной странице
 $cur_page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // получаем номер текущей страницы, по умолчанию 1

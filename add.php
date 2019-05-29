@@ -30,7 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //проверяем, что фор
     $dt_end = $_POST['lot-date'] ?? '';
     $bet_step = isset($_POST['lot-step']) ? ceil($_POST['lot-step']) : '';
     $cat_id = isset($_POST['category']) ? (int)$_POST['category'] : '';
-    $user_id = $cur_user_id;
 
     $required = [
         'lot-name',
@@ -96,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //проверяем, что фор
             $price,
             $dt_end,
             $bet_step,
-            $user_id,
+            $cur_user_id,
             $cat_id
         ]); // формируем подготовленное выражение, на основе SQL-запроса и значений для него
 
